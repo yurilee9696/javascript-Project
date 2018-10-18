@@ -1,0 +1,23 @@
+{
+  "name": "o2parm_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "mammoth": "^1.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yurilee9696/javascript-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yurilee9696/javascript-Project/issues"
+  },
+  "homepage": "https://github.com/yurilee9696/javascript-Project#readme"
+}

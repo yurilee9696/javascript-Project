@@ -1,4 +1,3 @@
-
 function checkExtension(){
     var thumbext = document.getElementById('uploadFile').value; //파일을 추가한 input 박스의 값
 
@@ -24,5 +23,13 @@ function checkExtension(){
     }
 }
 function docxToTxt(){
-    alert("워드");
+    var mammoth = require("mammoth");
+
+mammoth.extractRawText({path: "./hello.docx"})
+    .then(function(result){
+        var text = result.value; // The raw text 
+        console.log(text);
+        var messages = result.messages;
+    })
+    .done();
 }
