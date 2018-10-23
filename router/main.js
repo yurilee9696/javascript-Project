@@ -28,16 +28,28 @@ var upload = multer({ dest: 'uploads/' });
 
 
 //pdf문서 읽기
-// var pdftohtml = require('pdftohtmljs');
-// var converter = new pdftohtml('test.pdf', "sample.html");
+//var pdftohtml = require('pdftohtmljs');
+//var converter = new pdftohtml('test.pdf', "sample.html");
 
-// function readPdf(){
-//     converter.convert('ipad').then(function() {
-//         console.log("Success");
-//     }).catch(function(err) {
-//         console.error("Conversion error: " + err);
-//     });
-// }
+var PdfReader = require("pdfreader").PdfReader;
+var pdfUtil = require('pdf-to-text');
+var pdf_path = "ss.pdf";
+function readPdf(){
+    // converter.convert('ipad').then(function() {
+    //     console.log("Success");
+    // }).catch(function(err) {
+    //     console.error("Conversion error: " + err);
+    // });
+    //Omit option to extract all text from the pdf file
+// pdfUtil.pdfToText('./ss.pdf', function(err, data) {
+//     if (err) throw(err);
+//     console.log(data); //print all text    
+//   });
+new PdfReader().parseFileItems("ss.pdf", function(err, item){
+    if (item && item.text)
+    console.log(item.text);
+   })
+}
 
 //word문서 읽기
 function readDoc(){
@@ -76,7 +88,7 @@ module.exports = function(app)
                 readDoc();
                 break;
             case 'pdf':
-                //readPdf();
+                readPdf();
                 break;
             case 'hwp':
                 readHwp();
