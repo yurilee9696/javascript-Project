@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "ejs": "^2.6.1",
+    "event-stream": "^4.0.1",
     "express": "^4.16.4",
     "mammoth": "^1.4.6",
     "multer": "^1.4.1",

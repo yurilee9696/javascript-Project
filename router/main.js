@@ -4,9 +4,15 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
+var hwp = require("node-hwp");
+var fs = require('fs');
 
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
+
+module.exports = {
+	'plainText': require('./plainText.js')
+};
 
 // var storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
@@ -21,20 +27,20 @@ var upload = multer({ dest: 'uploads/' });
 //app.use(express.bodyParser());
 
 
-//pdf 문서 읽는 모듈
-var pdftohtml = require('pdftohtmljs');
-var converter = new pdftohtml('test.pdf', "sample.html");
+//pdf문서 읽기
+// var pdftohtml = require('pdftohtmljs');
+// var converter = new pdftohtml('test.pdf', "sample.html");
 
-function readPdf(){
-    converter.convert('ipad').then(function() {
-        console.log("Success");
-    }).catch(function(err) {
-        console.error("Conversion error: " + err);
-    });
-}
+// function readPdf(){
+//     converter.convert('ipad').then(function() {
+//         console.log("Success");
+//     }).catch(function(err) {
+//         console.error("Conversion error: " + err);
+//     });
+// }
 
+//word문서 읽기
 function readDoc(){
-  //word문서 읽기
   mammoth.extractRawText({path: "./hello.docx"})
     .then(function(result){
         var text = result.value; // The raw text 
@@ -44,6 +50,13 @@ function readDoc(){
     .done();
 }
 
+//hwp문서 읽기
+function readHwp(){
+    hwp.open('hello.hwp', function(err, doc){
+     //console.log(doc.toHML(true)); //hwp 내용이 HWPML로 출력
+     console.log( doc.convertTo(hwp.converter.plainText)); //text만 출력
+    });
+}
 
 module.exports = function(app)
 {
@@ -63,7 +76,10 @@ module.exports = function(app)
                 readDoc();
                 break;
             case 'pdf':
-                readPdf();
+                //readPdf();
+                break;
+            case 'hwp':
+                readHwp();
                 break;
             default:
                 break;
