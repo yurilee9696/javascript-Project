@@ -5,8 +5,8 @@ var app = express();
 var bodyParser = require('body-parser');
 
 var hwp = require("node-hwp");
-var fs = require('fs');
-
+var content='기본';
+var uploadFilePath='';
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
 
@@ -28,45 +28,61 @@ var upload = multer({ dest: 'uploads/' });
 
 
 //pdf문서 읽기
-//var pdftohtml = require('pdftohtmljs');
-//var converter = new pdftohtml('test.pdf', "sample.html");
+// var pdfreader = require('pdfreader');
+ 
+// var rows = {}; // indexed by y-position
+ 
+// function printRows() {
+//   Object.keys(rows) // => array of y-positions (type: float)
+//     .sort((y1, y2) => parseFloat(y1) - parseFloat(y2)) // sort float positions
+//     .forEach((y) => console.log((rows[y] || []).join('')));
+// }
 
-var PdfReader = require("pdfreader").PdfReader;
+// function readPdf(){
+//     new pdfreader.PdfReader().parseFileItems('ss.pdf', function(err, item){
+//     if (!item || item.page) {
+//         // end of file, or page
+//         printRows();
+//         //console.log('PAGE:', item.page);
+//         rows = {}; // clear rows for next page
+//     }
+//     else if (item.text) {
+//         // accumulate text items into rows object, per line
+//         (rows[item.y] = rows[item.y] || []).push(item.text);
+//     }
+//     });
+// }
+
 var pdfUtil = require('pdf-to-text');
-var pdf_path = "ss.pdf";
+
 function readPdf(){
-    // converter.convert('ipad').then(function() {
-    //     console.log("Success");
-    // }).catch(function(err) {
-    //     console.error("Conversion error: " + err);
-    // });
-    //Omit option to extract all text from the pdf file
-// pdfUtil.pdfToText('./ss.pdf', function(err, data) {
-//     if (err) throw(err);
-//     console.log(data); //print all text    
-//   });
-new PdfReader().parseFileItems("ss.pdf", function(err, item){
-    if (item && item.text)
-    console.log(item.text);
-   })
+    pdfUtil.pdfToText(uploadFilePath, function(err, data) {
+    if (err) throw(err);
+    console.log(data); //print all text  
+    res.render('loadContent.ejs',{content:data});
+    });
 }
 
+
+
+
 //word문서 읽기
-function readDoc(){
-  mammoth.extractRawText({path: "./hello.docx"})
+function readDoc(res){
+  mammoth.extractRawText({path: uploadFilePath})
     .then(function(result){
         var text = result.value; // The raw text 
         console.log(text);
-        docText = text;
+        res.render('loadContent.ejs',{content:text});
     })
     .done();
 }
 
 //hwp문서 읽기
-function readHwp(){
-    hwp.open('hello.hwp', function(err, doc){
+function readHwp(res){
+    hwp.open(uploadFilePath, function(err, doc){
      //console.log(doc.toHML(true)); //hwp 내용이 HWPML로 출력
      console.log( doc.convertTo(hwp.converter.plainText)); //text만 출력
+     res.render('loadContent.ejs',{content:doc.convertTo(hwp.converter.plainText)});
     });
 }
 
@@ -82,10 +98,11 @@ module.exports = function(app)
         
         var fileStr=req.file.originalname.split('.');
         var fileEx=fileStr[1]; //파일 확장자명
-        console.log(fileEx);
+        uploadFilePath=req.file.path;
+        console.log(fileEx+' and '+uploadFilePath);
         switch (fileEx) {
             case 'doc': case 'docx':
-                readDoc();
+                readDoc(res);
                 break;
             case 'pdf':
                 readPdf();
@@ -96,6 +113,5 @@ module.exports = function(app)
             default:
                 break;
         }
-        res.render('loadContent.html');
       });
 }
