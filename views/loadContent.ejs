@@ -2,20 +2,19 @@
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Hello World!</title>
-  <!-- <link rel="stylesheet" href="/css/master.css"> -->
-  <style>
-    .name{
-      width: 100%;
-    }
-    html{
-      width: 100%;
-    }
-  </style>
-
+  <title>file upload</title>
+  <link rel="stylesheet" href="/css/style.css">
  </head>
- <body>
-  <h1>Hello</h1>
-    <div class="name" id="leadText"><%- content %></div>
- </body>
+ <body style="background-color: #FFF;">
+   <nav id="back-btn-wrapper">
+     <img id="back-btn" src="images/back-btn.svg" height="24" width="24" onclick="javascript:location.href='/';">
+   </nav>
+   <section id="content-wrapper">
+     <header id="file-header">
+       <h1 id="file-title"><%= fileTitle %></h1>
+       <hr>
+      </header>
+     <p id="file-content"><%- content %></p>
+   </section>
+  </body>
 </html>

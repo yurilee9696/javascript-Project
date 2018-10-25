@@ -5,8 +5,8 @@ var app = express();
 var bodyParser = require('body-parser');
 
 var hwp = require("node-hwp");
-var content='기본';
 var uploadFilePath='';
+var fileTitle='';
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
 
@@ -14,15 +14,6 @@ module.exports = {
 	'plainText': require('./plainText.js')
 };
 
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, 'uploads/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
-//     }
-//     filename: function (req, file, cb) {
-//       cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
-//     }
-//   })
-// var upload = multer({ storage:storage });
 var upload = multer({ dest: 'uploads/' });
 //app.use(express.bodyParser());
 
@@ -59,7 +50,7 @@ function readPdf(res){
     pdfUtil.pdfToText(uploadFilePath, function(err, data) {
     if (err) throw(err);
     console.log(data); //print all text  
-    res.render('loadContent.ejs',{content:data.replace(/\n/g, '<br/>',)});
+    res.render('loadContent.ejs',{fileTitle:fileTitle,content:data.replace(/\n/g, '<br/>',)});
     });
 }
 
@@ -72,7 +63,7 @@ function readDoc(res){
     .then(function(result){
         var text = result.value; // The raw text 
         console.log(text);
-        res.render('loadContent.ejs',{content:text.replace(/\n/g, '<br/>',)});
+        res.render('loadContent.ejs',{fileTitle:fileTitle,content:text.replace(/\n/g, '<br/>',)});
     })
     .done();
 }
@@ -83,8 +74,7 @@ function readHwp(res){
      //console.log(doc.toHML(true)); //hwp 내용이 HWPML로 출력
      let hwpContent=doc.convertTo(hwp.converter.plainText);
      console.log( hwpContent); //text만 출력
-     
-     res.render('loadContent.ejs',{content:hwpContent});
+     res.render('loadContent.ejs',{fileTitle:fileTitle,content:hwpContent.replace(/\n/g, '<br/>',)});
     });
 }
 
@@ -100,6 +90,7 @@ module.exports = function(app)
         
         var fileStr=req.file.originalname.split('.');
         var fileEx=fileStr[1]; //파일 확장자명
+        fileTitle=fileStr[0];
         uploadFilePath=req.file.path;
         console.log(fileEx+' and '+uploadFilePath);
         switch (fileEx) {

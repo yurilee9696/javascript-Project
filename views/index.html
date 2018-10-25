@@ -1,16 +1,31 @@
 <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script type="text/javascript" src="js/changeTxtFile.js"></script>
+    <title>file upload</title>
+    <script src="/js/extensionCheck.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <form action="choose" method="POST" enctype="multipart/form-data">
-        <input type="file" id="uploadFile" name="fileName">
-        <input type="submit" value="upload">
-    </form>
+    <section id="upload-form-wrapper">
+        <form action="choose" method="POST" id="upload-form" enctype="multipart/form-data" onsubmit='return check();'>
+            <h3>새로운 시나리오를 등록해보세요.</h3>
+            <input type="file" id="uploadFile" name="fileName" accept=".docx, .doc, .pdf, .hwp" onchange="fileSelect()">
+            <label for="uploadFile">
+                <figure class="upload-btn"><img src="../images/upload-ic.svg"/></figure>
+                <p id="select-file-name"></p>
+            </label>
+            <p id="select-file-name"></p>
+            <div id="submit-wrapper"><input type="submit" value="UPLOAD" id="upload-submit" disabled></div>
+        </form>
+    </section>
 </body>
 </html>
+
+
+
+

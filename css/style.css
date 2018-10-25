@@ -1,0 +1,125 @@
+html,body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #5366C5;
+}
+#upload-form-wrapper {
+  width: 35rem;
+  height: 30rem;
+  background-color: #FFF;
+  border: 1px solid #FFF;
+  border-radius: 15px;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 16%);
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: table;
+}
+#upload-form-wrapper h3 {
+  text-align: center;
+  margin-top: 0;
+}
+#upload-form {
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.upload-btn-wrapper {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+}
+.upload-btn {
+  border: 2px solid #FFF;
+  background-color: white;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 10rem;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 16%);
+  margin: 10px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.upload-btn img{
+  height: 100%;
+  width: 100%;
+}
+#uploadFile{
+  display: none;
+}
+.upload-btn-wrapper input[type=file] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+#select-file-name {
+  color: #777777;
+  text-align: center;
+}
+#submit-wrapper {
+  width: 100%;
+  text-align: center;
+}
+#upload-submit {
+  width: 10rem;
+  background-color: #448CFF;
+  border-radius: 10px;
+  padding: 0.7rem;
+  font-size: 1rem;
+  color: #FFF;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#upload-submit:hover {
+  background-color: #3EBDFF;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 16%);
+}
+#upload-submit:disabled,
+#upload-submit[disabled]{
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: default;
+}
+
+#back-btn-wrapper {
+  width: 100%;
+  padding: 0.2rem 0;
+  background-color: #5366C5;
+  padding-bottom: 0.8rem;
+}
+#back-btn {
+  padding: 1rem;
+}
+#back-btn:hover {
+  cursor: pointer;
+}
+#file-header{
+  background-color: #FFF;
+  border: 1px solid #FFF;
+  border-radius: 15px 15px 0px 0px;
+  margin-top: -0.8rem;
+}
+#file-title {
+  padding: 0 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+#file-content {
+  padding: 2.2rem;
+  max-width: 45rem;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: auto !important;
+  height: 100%;
+}
