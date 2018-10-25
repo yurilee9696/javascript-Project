@@ -55,11 +55,11 @@ var upload = multer({ dest: 'uploads/' });
 
 var pdfUtil = require('pdf-to-text');
 
-function readPdf(){
+function readPdf(res){
     pdfUtil.pdfToText(uploadFilePath, function(err, data) {
     if (err) throw(err);
     console.log(data); //print all text  
-    res.render('loadContent.ejs',{content:data});
+    res.render('loadContent.ejs',{content:data.replace(/\n/g, '<br/>',)});
     });
 }
 
@@ -72,7 +72,7 @@ function readDoc(res){
     .then(function(result){
         var text = result.value; // The raw text 
         console.log(text);
-        res.render('loadContent.ejs',{content:text});
+        res.render('loadContent.ejs',{content:text.replace(/\n/g, '<br/>',)});
     })
     .done();
 }
@@ -81,8 +81,10 @@ function readDoc(res){
 function readHwp(res){
     hwp.open(uploadFilePath, function(err, doc){
      //console.log(doc.toHML(true)); //hwp 내용이 HWPML로 출력
-     console.log( doc.convertTo(hwp.converter.plainText)); //text만 출력
-     res.render('loadContent.ejs',{content:doc.convertTo(hwp.converter.plainText)});
+     let hwpContent=doc.convertTo(hwp.converter.plainText);
+     console.log( hwpContent); //text만 출력
+     
+     res.render('loadContent.ejs',{content:hwpContent});
     });
 }
 
@@ -105,10 +107,10 @@ module.exports = function(app)
                 readDoc(res);
                 break;
             case 'pdf':
-                readPdf();
+                readPdf(res);
                 break;
             case 'hwp':
-                readHwp();
+                readHwp(res);
                 break;
             default:
                 break;

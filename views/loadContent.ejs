@@ -3,11 +3,19 @@
  <head>
   <meta charset="utf-8">
   <title>Hello World!</title>
-  <link rel="stylesheet" href="/css/master.css">
+  <!-- <link rel="stylesheet" href="/css/master.css"> -->
+  <style>
+    .name{
+      width: 100%;
+    }
+    html{
+      width: 100%;
+    }
+  </style>
+
  </head>
  <body>
-  <h1>Hello
-    <span class="name"><%= content %>!</span>
-  </h1>
+  <h1>Hello</h1>
+    <div class="name" id="leadText"><%- content %></div>
  </body>
 </html>
