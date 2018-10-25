@@ -94,7 +94,7 @@ module.exports = function(app)
         uploadFilePath=req.file.path;
         console.log(fileEx+' and '+uploadFilePath);
         switch (fileEx) {
-            case 'doc': case 'docx':
+            case 'docx':
                 readDoc(res);
                 break;
             case 'pdf':

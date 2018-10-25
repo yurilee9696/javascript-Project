@@ -6,10 +6,10 @@ function check(){
     }
     else{
         var extension = thumbext.slice(thumbext.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로 만듭니다.
-        if(extension != "docx" && extension != "doc" &&  extension != "pdf" && extension != "hwp"){ //확장자를 확인합니다.
+        if(extension != "docx" && extension != "pdf" && extension != "hwp"){ //확장자를 확인합니다.
             document.getElementById('upload-submit').disabled = true;
             document.getElementById('select-file-name').innerHTML='';
-            alert("업로드는 (docx, doc, hwp, pdf))만 가능합니다.");
+            alert("업로드는 (docx, hwp, pdf))만 가능합니다.");
             return false;
         }
         else{
